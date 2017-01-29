@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TODO
 
 1. Load CSV data from sources
@@ -65,3 +66,7 @@ Signals
 - Moving Average Trading System
 - Relative Strength Index Trading System
 - 
+=======
+# technical-indicators
+Charts for displaying stocks technical indicators
+>>>>>>> 627896ab026f0f21e9590c7ea2592050acf91813
