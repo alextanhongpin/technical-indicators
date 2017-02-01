@@ -57,8 +57,6 @@ const g = svg.append('g')
 
 const csvURL = 'http://localhost:4000/data/ql-resources/2017-01-27-ql-resources.csv'
 loadCSV(csvURL).then((data) => {
-  console.log(data)
-
   x.domain(d3.extent(data, d => d.date))
   y.domain(d3.extent(data, d => d.close))
 

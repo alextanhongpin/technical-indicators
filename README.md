@@ -1,35 +1,34 @@
-<<<<<<< HEAD
-# TODO
+# D3 Stock Charts
 
-1. Load CSV data from sources
-2. Show indicators
-3. Show signals
+A simple stock chart with multiple indicators/signals applied. 
 
 
+## Goals: 
+
+Create a simple architecture for reusable d3 components, and apply it to a real-life example (stock charts).
 
 
-SMA
-- change line colors
-- change SMA value
-- multiple SMAs plotting
+## Components
+
+- Base Chart (Done)
+- Axis (Done)
+- Axis annotations
+- Crosshair (Done)
+- Data Loader (Done)
+- Candlestick
+- Volume
+- Percentage axis
+- Zooming
+- Indicator combinations
+- Interactive trendlines
+- Interactive support and resistance lines
+- Trade arrows
+- Legends
+- Range datepicker
 
 
+## Indicators
 
-Candlestick
-Volume
-Percentage axis
-Simple and Exponential Moving Averages
-Zooming
-Indicator combinations
-Interactive trendlines
-Interactive support and resistance lines
-Crosshairs with following axis annotations for all axis
-
-Keywords:
-Candlestick, RSI, crosshair, trendlines
-sma, volume, tradearrow
-
-Indicators
 - Bolinger Band
 - Exponential Moving Average
 - Exponential Moving Average Envelope
@@ -39,7 +38,9 @@ Indicators
 - Simple Moving Average (Done)
 - Accumulation/Distribution
 - Average Directional Index
-- Average True Range
+- Average True Range (ATR)
+- ElderRay
+- Elder Impulse
 - Chaikin Money Flow
 - Commodity Channel Index
 - Elliot Wave Oscillator
@@ -59,14 +60,27 @@ Indicators
 - Williams' %R
 
 
-Signals
+## Signals
 - Average Directional Index Trading System
 - Commodity Channel Index Trading System
 - Moving Average Convergence/Divergence Trading System
 - Moving Average Trading System
 - Relative Strength Index Trading System
-- 
-=======
-# technical-indicators
-Charts for displaying stocks technical indicators
->>>>>>> 627896ab026f0f21e9590c7ea2592050acf91813
+
+## Trendlines
+
+- Fibonacci Retracements
+
+## Chart types
+
+- Scatter
+- Area
+- Bar
+- Line (Done)
+- Candlestick
+- OHLC
+- HeikenAshi
+- Renko
+- Kagi
+- Point & Figure
+- Indicators

@@ -1,10 +1,10 @@
 
-class LineChart extends BaseChart {
+class LineChart extends ChartInterface {
   constructor (props) {
     super(props)
   }
 
-  drawChart () {
+  _initChart () {
     // line chart
     const { x, y, xAxisHook, yAxisHook } = this.state
     this.state.line = d3.line()
@@ -12,11 +12,6 @@ class LineChart extends BaseChart {
     .y(d => y(yAxisHook(d)))
   }
 
-  init () {
-    this.setupScale()
-    this.setupAxis()
-    this.drawChart()
-  }
   destroy () {
     this.g.remove()
   }
@@ -26,9 +21,13 @@ class LineChart extends BaseChart {
       xAxis, yAxis,
       xLabel, yLabel,
       disableXAxis, disableYAxis,
-      color, line, stroke, fill, strokeWidth } = this.state
-
-    this.updateAxis(data)
+      color, line, stroke, fill, strokeWidth,
+      mapper
+    } = this.state
+    if (typeof mapper === 'function') {
+      data = mapper(data)
+    }
+    this.updateAxes(data)
     if (this.g) {
       this.g.remove()
     }

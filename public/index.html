@@ -19,32 +19,66 @@
 
 
 	</style>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 </head>
 <body>
 
-<h1>Stock Chart</h1>
+<nav class='navbar navbar-default navbar-static-top'>
+	<div class='container-fluid'>
+		<div class='navbar-brand'>Stock Insight</div>
+	</div>
+</nav>
 
-<!-- <svg width="960" height="500"></svg> -->
-<div>
-	Period
-	<span id='max'>MAX</span>
-	<span id='5y'>5Y</span>
-	<span id='1y'>1Y</span>
-	<span id='6m'>6m</span>
-	<span id='3m'>3m</span>
-	<span id='1m'>1m</span>
-</div> 
-<div id='chart'></div>
+<main class='container'>
+	<!-- <svg width="960" height="500"></svg> -->
+	<div id='loader'></div>
+	<div class='btn-group'>
+		<button type="button" class="btn btn-default" aria-label="Left Align">
+		  1m
+		</button>
+		<button type="button" class="btn btn-default" aria-label="Left Align">
+		  3m
+		</button>
+		<button type="button" class="btn btn-default" aria-label="Left Align">
+		  6m
+		</button>
+		<button type="button" class="btn btn-default" aria-label="Left Align">
+		  1Y
+		</button>
+		<button type="button" class="btn btn-default" aria-label="Left Align">
+		  5Y
+		</button>
+		<button type="button" class="btn btn-primary" aria-label="Left Align">
+		  Max
+		</button>
+	</div> 
+	<div id='chart'></div>
 
+</main>
+<!--Libraries/Dependencies-->
 <script type="text/javascript" src="./scripts/d3/d3.min.js"></script>
+<script type="text/javascript" src="./scripts/lib/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="./scripts/core/_base.js"></script>
+<!--Utils-->
+<script type="text/javascript" src="./scripts/utils/date.js"></script>
+<script type="text/javascript" src="./scripts/utils/range.js"></script>
+
+<!--Services-->
+<script type="text/javascript" src="./scripts/service/_interface.js"></script>
+<script type="text/javascript" src="./scripts/service/yahoo-finance.js"></script>
+
+<!--Core-->
+<script type="text/javascript" src="./scripts/core/_interface.js"></script>
 <script type="text/javascript" src="./scripts/core/axis.js"></script>
+<script type="text/javascript" src="./scripts/core/indicators.js"></script>
 <script type="text/javascript" src="./scripts/core/svg.js"></script>
 <script type="text/javascript" src="./scripts/core/line.js"></script>
 <script type="text/javascript" src="./scripts/core/loader.js"></script>
 <script type="text/javascript" src="./scripts/core/crosshair.js"></script>
 
-<script type="text/javascript" src="./scripts/test.js"></script>
+<!--Main-->
+<script type="text/javascript" src="./scripts/main.js"></script>
 </body>
 </html>

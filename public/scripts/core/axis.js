@@ -1,54 +1,55 @@
 
-class Axis extends BaseChart {
+class Axis extends ChartInterface {
   constructor (props) {
     super(props)
+    // Override the inherited props
+    this.state.disableXAxis = false
+    this.state.disableYAxis = false
   }
-  drawChart () {
-    // line chart
-    const { x, y, xAxisHook, yAxisHook } = this.state
-    this.state.line = d3.line()
-    .x(d => x(xAxisHook(d)))
-    .y(d => y(yAxisHook(d)))
-  }
-
-  init () {
-    this.setupScale()
-    this.setupAxis()
-    this.drawChart()
-  }
-
   render (svg, data) {
-    const { left, top, width, height,
+    const {
+      left, top, width, height,
       xAxis, yAxis,
-      xAxisClass, yAxisClass,
+      xAxisClassName, yAxisClassName,
       xLabel, yLabel,
       yAxisLineColor, yAxisTickColor, yAxisTextColor, yAxisLabelColor,
       disableXAxis, disableYAxis,
-      line, stroke, fill, strokeWidth } = this.state
+      line, stroke, fill, strokeWidth
+    } = this.state
 
-    this.updateAxis(data)
-    if (this.g) {
+    this.updateAxes(data)
+
+    if (this.context.g) {
       // Remove existing
-      this.g.remove()
+      this.context.g.remove()
     }
-    this.g = svg.append('g')
+
+    // Create a new group context
+    this.context.g = svg.append('g')
       .attr('transform', `translate(${left}, ${top})`)
 
+    // Axes can be configured to be enabled/disabled anytime
     if (!disableXAxis) {
-      this.g.append('g')
-        .attr('class', xAxisClass)
+      // Avoid redrawing it twice
+      if (this.context.xAxis) {
+        this.context.xAxis.remove()
+      }
+      this.context.xAxis = this.context.g.append('g')
+        .attr('class', xAxisClassName)
         .attr('transform', `translate(0, ${height})`)
         .call(xAxis)
     }
+
     if (!disableYAxis) {
-      if (this.yAxisGroup) {
-        this.yAxisGroup.remove()
+      if (this.context.yAxisGroup) {
+        this.context.yAxisGroup.remove()
       }
-      this.yAxisGroup = this.g.append('g')
-        .attr('class', yAxisClass)
+      const yAxisGroup = this.context.g.append('g')
+        .attr('class', yAxisClassName)
         .call(yAxis)
 
-      this.yAxisGroup.append('text')
+      // Add the y-axis primary label text
+      yAxisGroup.append('text')
         .attr('fill', yAxisLabelColor)
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
@@ -56,17 +57,22 @@ class Axis extends BaseChart {
         .attr('text-anchor', 'end')
         .text(yLabel)
 
-      this.yAxisGroup.select('path.domain')
+      // Apply styling for the y-axis vertical line
+      yAxisGroup.select('path.domain')
       .attr('stroke', yAxisLineColor)
 
-      this.yAxisGroup.selectAll('g.tick')
+      // Apply styling for the y-axis label ticks
+      yAxisGroup.selectAll('g.tick')
       .selectAll('line')
       .attr('stroke', yAxisTickColor)
 
-      this.yAxisGroup.selectAll('g.tick')
+      // Apply styling for the y-axis label text
+      yAxisGroup.selectAll('g.tick')
       .selectAll('text')
       .attr('stroke', 'none')
       .attr('fill', yAxisTextColor)
+
+      this.context.yAxisGroup = yAxisGroup
     }
   }
 }

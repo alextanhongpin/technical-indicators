@@ -14,6 +14,15 @@ class SVGChart {
       throw new Error('SVGError: An parent element is required in order to render the svg element')
     }
   }
+  get context () {
+    return this.state.svg
+  }
+
+  destroy () {
+    // Remove the main svg
+    // Note that we assume there is only one SVG present in the DOM
+    d3.select('svg').remove()
+  }
 
   register (name, chart) {
     const { width, height, charts } = this.state
@@ -23,7 +32,7 @@ class SVGChart {
     // width and height
     // Iterate through all chart
     charts[name].fitChart(width, height)
-    charts[name].init()
+    // charts[name].init()
   }
   unregister (name) {
     const { charts } = this.state
