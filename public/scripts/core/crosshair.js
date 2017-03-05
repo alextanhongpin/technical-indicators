@@ -55,8 +55,8 @@ class Crosshair extends ChartInterface {
   }
 
   mousemove (state, context) {
-    const { x, y, data = [] } = state
-    const { horizontalLine, verticalLine, circle } = context
+    const { x, y, data = [], height } = state
+    const { horizontalLine, verticalLine, circle, yAnnotation, xAnnotation } = context
     return function () {
       // Get the X position of the mouse and invert it to get the date
       const mouseX = x.invert(d3.mouse(this)[0])
@@ -96,6 +96,18 @@ class Crosshair extends ChartInterface {
       .attr('display', 'block')
       .attr('cx', crosshairX)
       .attr('cy', crosshairY)
+
+      yAnnotation
+      .transition()
+      .duration(50)
+      .attr('transform', `translate(0, ${crosshairY})`)
+      .select('text').text(closest.close)
+
+      xAnnotation
+      .transition()
+      .duration(50)
+      .attr('transform', `translate(${crosshairX}, ${height})`)
+      .select('text').text(closest.date)
     }
   }
 
@@ -154,6 +166,12 @@ class Crosshair extends ChartInterface {
       .attr('stroke-dasharray', '1, 2')
       .attr('display', 'none')
 
+      // For displaying y-annotations
+    this.context.yAnnotation = this.drawAnnotationY(this.context.crosshair)
+    this.context.xAnnotation = drawAnnotationX(this.context.crosshair, {
+      height: height
+    })
+
     // Create an overlay on top of the chart
     // The overlay will be the one listening to the mouse events
     this.context.overlay = this.context.g.append('rect')
@@ -164,5 +182,86 @@ class Crosshair extends ChartInterface {
       .on('mousemove', this.mousemove(this.state, this.context))
       .on('mouseover', null)
       .on('mouseleave', this.mouseleave.bind(this))
+
+    // this.context.crosshair.append('rect')
+    // .attr('width', 30)
+    // .attr('height', 40)
+    // .attr('fill', 'blue')
+    // .data([{ x: 0, y: 0 }])
+    // .attr('transform', 'translate(0, 0)')
+    // .call(dragBehaviour)
   }
+  drawAnnotationY (root, data) {
+    const annotationY = root.append('g')
+    .attr('transform', `translate(0, 120)`)
+
+    annotationY.append('rect')
+    .attr('width', 30)
+    .attr('height', 20)
+    .attr('stroke', 'black')
+
+    annotationY.append('text')
+    .attr('font-family', 'sans-serif')
+    .attr('font-size', '12px')
+    .attr('fill', 'red')
+    .text('Hello')
+
+    return annotationY
+  }
+
+}
+
+// Function as modules
+function drawAnnotationX (root, data) {
+  const x = root.append('g')
+  .attr('transform', `translate(0, ${data.height})`)
+
+  x.append('rect')
+  .attr('width', 30)
+  .attr('height', 20)
+  .attr('stroke', 'black')
+
+  x.append('text')
+  .attr('font-family', 'sans-serif')
+  .attr('font-size', '12px')
+  .attr('fill', 'red')
+  .text('Hello')
+
+  return x
+}
+
+function horizontalLine (root, data) {
+  return root.append('line')
+  .attr('class', data.class)
+  .attr('x1', data.x1)
+  .attr('x2', data.x2)
+  .attr('stroke', data.stroke)
+  .attr('stroke-width', data.strokeWidth)
+  .attr('stroke-dasharray', '1, 2')
+  .attr('display', 'none')
+}
+
+function dragBehaviour () {
+  return d3.drag()
+  .subject(function () {
+    const evt = d3.select(this)
+    return {
+      x: 0,
+      y: 120
+    }
+  })
+  // .on('start', function () {
+  //   d3.event.sourceEvent.stopPropagation() // silence other listeners
+  //   if (d3.event.sourceEvent.which == 1) {
+  //        // dragInitiated = true;
+  //   }
+  // })
+  .on('drag', function (d, i) {
+    console.log('dragging')
+    d.x += d3.event.dx
+    d.y += d3.event.dy
+    d3.select(this).attr('transform', function (d, i) {
+      return `translate([${d3.event.x}, ${d3.event.y}])`
+    })
+  })
 }
