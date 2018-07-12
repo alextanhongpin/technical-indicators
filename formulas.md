@@ -4,6 +4,8 @@
 - [Technical Overlays](#technical-overlays)
   - [Bollinger Bands](#bollinger-bands)
   - [Chandelier Exit](#chandelier-exit)
+- [Technical Indicators](#technical-indicators)
+  - [Simple Moving Average](#simple-moving-average)
 - [Reference](#reference)
 
 
@@ -55,6 +57,19 @@ high_22 = max(a)
 low_22 = min(a)
 
 # TODO: Get ATR value
+```
+
+# [Technical Indicators](#technical-indicators)
+
+## [Simple Moving Average](#simple-moving-average)
+
+```python
+# TODO: Don't hardcode 20
+def sma20(curr_idx, arr):
+     arr_len = len(arr)
+     if (curr_idx > arr_len):
+        raise ValueError('Current index cannot be greater than array length')
+     return arr[curr_idx-20:curr_idx]
 ```
 
 Depends on: ATR
