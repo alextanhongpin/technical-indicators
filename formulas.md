@@ -10,6 +10,11 @@
   - [Aroon Oscillator](#aroon-oscillator)
   - [Average Directional Index](#average-directional-index)
   - [Average True Range](#average-true-range)
+  - [Bollinger Bands](#bollinger-bands)
+  - [%B Indicator](#%b-indicator)
+  - [Chaikin Money Flow](#chaikin-money-flow)
+  - [Chande Trend Meter (CTM))(#chande-trend-meter-ctm)
+  - [Commodity Channel Index (CCI)](#commodity-channel-index-cci)
   - [Simple Moving Average](#simple-moving-average)
 - [Reference](#reference)
 
@@ -152,7 +157,7 @@ atr = (prior_atr * 13 + tr) / 14
 
 ## [Bollinger Bands](#bollinger-bands)
 
-Shows the percentage difference between the upper and lower Bollinger Band.
+Shows the percentage difference between the upper and lower Bollinger Band. Default setting is Bollinger Bands(20, 2), which means the bands are 2 standard deviations above and below the 20-day simple moving average, which is also the middle band.
 
 ```
 Percentage Bandwidth = ((Upper Band - Lower Band) / Middle Band) * 100
@@ -162,6 +167,92 @@ Where:
   Middle Band = 20-day SMA
   Upper Band = 20-day SMA + 2 * STDEV
   Lower Band = 20-day SMA - 2 * STDEV
+```
+
+## [%B Indicator](#%b-indicator)
+
+Shows the relationship between price and standard deviation Bollinger Bands. Uses the default setting for Bollinger Bands(20,2). %B can be used to identify _overbought_ and _oversold_ situations.
+
+```
+%B = (Price - Lower Band)/(Upper Band - Lower Band)
+```
+
+The six basic relationship levels:
+
+- %B equals 1 when price is at the upper band
+- %B equals 0 when price is at the lower band
+- %B is above 1 when price is above the upper band
+- %B is below 0 when price is below the lower band
+- %B is above 0.5 when price is above the middle band (20-day SMA)
+- %B is below 0.5 when price is below the middle band (20-day SMA)
+
+Depends on: BollingerBands(20,2), SMA(20)
+
+## [Chaikin Money Flow](#chaikin-money-flow)
+
+Combines price and volume to show how money may be flowing into or out of a stock. Based on Accumulation/Distribution Line.
+
+```
+1. Money Flow Multiplier = [(Close - Low) - (High - Close)] / (High - Low)
+2. Money Flow Volume = Money Flow Multiplier x Volume for the Period
+3. 20-period CMF = 20-period Sum of Money Flow Volume / 20 period Sum of Volume
+```
+
+Required: Date, High, Low, Close, Volume
+
+
+```python
+mf_mul = ((close - low) - (high - close)) / (high - low)
+mf_vol = mf_mul * vol
+cmf20 = mf_vols[:20] / vols[:20]
+```
+
+## [Chaikin Oscillator](#chaikin-oscillator)
+
+Combines price and volume to show how money may be flowing into or out of a stock
+
+```
+1. Money Flow Multiplier = [(Close - Low) - (High - Close)] / (High - Low)
+2. Money Flow Volume = Money Flow Multiplier x Volume for the Period
+3. ADL = Previous ADL + Current Period's Money Flow Volume
+4. Chaikin Oscillator = (3-day EMA of ADL) - (10-day EMA of ADL)
+```
+
+## [Chande Trend Meter (CTM))(#chande-trend-meter-ctm)
+
+Scores the stock's trend, based on several technical indicators over six different timeframes.
+
+- The position of high, low, and close, relative to [Bollinger Bands](#bollinger-bands) in four different timeframes (20-day, 50-day, 75-day, and 100-day)
+- The price change relative to the standard deviation over the past 100 days
+- The 14-day RSI value
+- The existence of any short-term (2-day) price channel breakouts
+
+The scales for CTM:
+
+- Stocks with a score of 90-100 are in very strong uptrends
+- Stocks with a score of 80-90 are in strong uptrends
+- Stocks with a score of 60-80 are in weak uptrends
+- Stocks with a score of 20-60 are either flat or in weak downtrends
+- Stocks with a score of 0-20 are in very strong downtrends
+
+```
+TODO: Calculation
+```
+
+## [Commodity Channel Index (CCI)](#commodity-channel-index-cci)
+
+Shows a stock's variation from it's typical price.
+
+```
+CCI = (Typical Price - 20-period SMA of TP) / (0.15 * Mean Deviation)
+Typical Price (TP) = (High + Low + Close) / 3
+Constant = .15
+
+There are four steps to calculating the Mean Deviation: 
+First, subtract the most recent 20-period average of the typical price from each period's typical price. 
+Second, take the absolute values of these numbers. 
+Third, sum the absolute values. 
+Fourth, divide by the total number of periods (20). 
 ```
 
 ## [Simple Moving Average](#simple-moving-average)
