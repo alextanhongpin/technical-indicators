@@ -13,8 +13,12 @@
   - [Bollinger Bands](#bollinger-bands)
   - [%B Indicator](#%b-indicator)
   - [Chaikin Money Flow](#chaikin-money-flow)
-  - [Chande Trend Meter (CTM))(#chande-trend-meter-ctm)
-  - [Commodity Channel Index (CCI)](#commodity-channel-index-cci)
+  - [Chande Trend Meter CTM)(#chande-trend-meter-ctm)
+  - [Commodity Channel Index CCI](#commodity-channel-index-cci)
+  - [Coppock Curve](#coppock-curve)
+  - [Correlation Coefficient](#correlation-coefficient)
+  - [DecisionPoint Price Momentum Oscillator)(#decisionpoint-price-momentum-oscillator)
+  - Detrended Price Oscillator (DPO)
   - [Simple Moving Average](#simple-moving-average)
 - [Reference](#reference)
 
@@ -218,7 +222,7 @@ Combines price and volume to show how money may be flowing into or out of a stoc
 4. Chaikin Oscillator = (3-day EMA of ADL) - (10-day EMA of ADL)
 ```
 
-## [Chande Trend Meter (CTM))(#chande-trend-meter-ctm)
+## [Chande Trend Meter CTM)(#chande-trend-meter-ctm)
 
 Scores the stock's trend, based on several technical indicators over six different timeframes.
 
@@ -239,7 +243,7 @@ The scales for CTM:
 TODO: Calculation
 ```
 
-## [Commodity Channel Index (CCI)](#commodity-channel-index-cci)
+## [Commodity Channel Index CCI](#commodity-channel-index-cci)
 
 Shows a stock's variation from it's typical price.
 
@@ -254,6 +258,49 @@ Second, take the absolute values of these numbers.
 Third, sum the absolute values. 
 Fourth, divide by the total number of periods (20). 
 ```
+
+## [Coppock Curve](#coppock-curve)
+
+An oscillator that uses rate-or-change and a weighted moving average to measure momentum.
+
+```
+Coppock Curve = 10-period WMA of (14-period RoC + 11-period RoC)
+
+WMA = Weighted Moving Average
+RoC = Rate-of-Change
+```
+
+## [Correlation Coefficient](#correlation-coefficient)
+
+Shows the degree of correlation between two securities over a given timeframe.
+
+```
+TODO: Complicated calculation
+```
+
+## [DecisionPoint Price Momentum Oscillator)(#decisionpoint-price-momentum-oscillator)
+
+An advanced momentum indicator that tracks a stock's rate of change
+
+```
+Smoothing Multiplier = (2 / Time period)
+Custom Smoothing Function = {Close - Smoothing Function(previous day)} * Smoothing Multiplier + Smoothing Function(previous day)
+
+PMO Line = 20-period Custom Smoothing of (10 * 35-period Custom Smoothing of (((Today's Price / Yesterday's Price) * 100) - 100))
+
+PMO Signal Line = 10-period EMA of the PMO Line
+```
+
+## Detrended Price Oscillator (DPO)
+
+A price oscillator that uses a displaced moving average to identify cycles.
+
+```
+Price {X/2 + 1} periods ago less than X-period simple moving average.
+
+X refers to the number of periods used to calculate the Detrended Price Oscillator. A 20-day DPO would use a 20-day SMA that is displayed by 11 periods {20/2 + 1 = 11}. This displacement shifts the 20-day SMA 11 days to the left, which actually puts it in the middle of the look-back period. The value of the 20-day SMA is then subtracted from the price in the middle of the this look-back period. In short, DPO(20) equals price 11 days ago less the 20-day SMA.
+```
+
 
 ## [Simple Moving Average](#simple-moving-average)
 
