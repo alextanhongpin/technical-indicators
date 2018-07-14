@@ -301,6 +301,17 @@ Price {X/2 + 1} periods ago less than X-period simple moving average.
 X refers to the number of periods used to calculate the Detrended Price Oscillator. A 20-day DPO would use a 20-day SMA that is displayed by 11 periods {20/2 + 1 = 11}. This displacement shifts the 20-day SMA 11 days to the left, which actually puts it in the middle of the look-back period. The value of the 20-day SMA is then subtracted from the price in the middle of the this look-back period. In short, DPO(20) equals price 11 days ago less the 20-day SMA.
 ```
 
+## Ease of Movement
+
+An indicator that compares volume and price to identify significant moves.
+
+```
+Distance Moved = ((H + L) / 2) - (Prior H + Prior L) / 2)
+Box Ratio = ((V/100,000,000)/(H - L))
+
+1-Period EMV = ((H + L) / 2 - (Prior H + Prior L) / 2) / ((V/100,000,000)/(H - L))
+14-Period Ease of Movement = 14-Period simple moving average of 1-period EMV
+```
 
 ## [Simple Moving Average](#simple-moving-average)
 
