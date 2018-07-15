@@ -19,6 +19,7 @@
   - [Correlation Coefficient](#correlation-coefficient)
   - [DecisionPoint Price Momentum Oscillator)(#decisionpoint-price-momentum-oscillator)
   - Detrended Price Oscillator (DPO)
+  <!-- - [mon](#money-flow-index-mfi) -->
   - [Simple Moving Average](#simple-moving-average)
 - [Reference](#reference)
 
@@ -73,6 +74,44 @@ low_22 = min(a)
 # TODO: Get ATR value
 ```
 Depends on: ATR
+
+
+## Ichimoku Cloud
+
+A comprehensive indicator that defines support and resistance, identifies trend direction, gauges momentume and provides trading signals.
+
+```
+Tenkan-sen (Conversion Line): (9-period high + 9-period low)/2))
+
+The default setting is 9 periods and can be adjusted. On a daily chart, this line is the midpoint of the 9-day high-low range, 
+which is almost two weeks.  
+```
+
+
+```
+Kijun-sen (Base Line): (26-period high + 26-period low)/2))
+
+The default setting is 26 periods and can be adjusted. On a daily chart, this line is the midpoint of the 26-day high-low range, which is almost one month).  
+```
+
+```
+Senkou Span A (Leading Span A): (Conversion Line + Base Line)/2))
+
+This is the midpoint between the Conversion Line and the Base Line. The Leading Span A forms one of the two Cloud boundaries. It is referred to as "Leading" because it is plotted 26 periods in the future and forms the faster Cloud boundary. 
+```
+
+```
+Senkou Span B (Leading Span B): (52-period high + 52-period low)/2))
+
+On the daily chart, this line is the midpoint of the 52-day high-low range, which is a little less than 3 months. The default calculation setting is 52 periods, but can be adjusted. This value is plotted 26 periods in the future and forms the slower Cloud boundary.
+```
+
+```
+Chikou Span (Lagging Span): Close plotted 26 days in the past
+
+The default setting is 26 periods, but can be adjusted. 
+```
+
 
 # [Technical Indicators](#technical-indicators)
 
@@ -303,6 +342,8 @@ X refers to the number of periods used to calculate the Detrended Price Oscillat
 
 ## Ease of Movement
 
+  Short name: EMV
+
 An indicator that compares volume and price to identify significant moves.
 
 ```
@@ -313,15 +354,314 @@ Box Ratio = ((V/100,000,000)/(H - L))
 14-Period Ease of Movement = 14-Period simple moving average of 1-period EMV
 ```
 
-## [Simple Moving Average](#simple-moving-average)
+## Force Index
 
-```python
-# TODO: Don't hardcode 20
-def sma20(curr_idx, arr):
-     arr_len = len(arr)
-     if (curr_idx > arr_len):
-        raise ValueError('Current index cannot be greater than array length')
-     return arr[curr_idx-20:curr_idx]
+A simple price-and-volume oscillator.
+
+```
+Force Index(1) = {Close (current period) - Close(prior period)} x Volume
+Force Index(13) = 13-Period EMA of Force Index(1)
+```
+
+## Mass Index
+
+An indicator that identifies reversals when the price range widens.
+
+```
+Single EMA = 9-period exponential moving average (EMA) of the high-low differential
+Double EMA = 9-period EMA of the 9-period EMA of the high-low differential
+EMA Ratio = Single EMA divided by the Double EMA
+Mass Index = 25-period sum of the EMA Ratio
+```
+
+## Moving Average Convergence/Divergence Oscillator (MACD)
+
+A momentum oscillator based on the difference between two EMAs.
+
+```
+MACD Line: (12-day EMA - 26-day EMA)
+Signal Line: 9-day EMA of MACD Line
+MACD Histogram: MACD Line - Signal Line
+```
+
+## MACD Histogram
+
+A momentum oscillator that shows the difference between MACD and its signal line.
+
+```
+MACD: (12-day EMA - 26-day EMA)
+Signal Line: 9-day EMA of MACD
+MACD Histogram: MACD - Signal Line
+```
+
+## Money Flow Index (MFI)
+
+A volume-weighted version of RSI that shows shifts is buying and selling pressure.
+
+```
+Typical Price = (High + Low + Close) / 3
+Raw Money Flow = Typical Price x Volume
+Money Flow Ratio = (14-period Positive Money Flow) / (14-period Negative Money Flow)
+Money Flow Index = 100 - 100 / (1 + Money Flow Ratio)
+```
+
+## Negative Volume Index (NVI)
+
+A cumulative volume-based indicator used to identify trend reversals.
+
+```
+1. Cumulative NVI starts at 1000
+2. Add the Percentage Price Change to cumulative NVI when Volume Decreases.
+3. Cumulative NVI is Unchanged when Volume Increases
+4. Apply a 255-day EMA for Signals
+```
+
+## On Balance Volume (OBV)
+
+Combines price and volume in a very simple way to show how money may be flowing into or out of stock.
+
+```
+If the closing price is above the prior close price then:
+Current OBV = Previous OBV + Current Volume
+
+If the closing price is below the prior close price then:
+Current OBV = Previous OBV - Current Volume
+
+If the closing prices equals the prior close price then:
+Current OBV = Previous OBV (no change)
+```
+
+## Percentage Price Oscillator (PPO)
+
+A percentage-based version of the MACD indicator.
+
+```
+Percentage Price Oscillator (PPO): {(12-day EMA - 26-day EMA) / 26-day EMA} x 100
+Signal Line: 9-day EMA of PPO
+PPO Histogram: PPO - Signal Line
+```
+
+## Percentage Volume Oscillator (PVO)
+
+The PPO indicator applied to volume instead of price.
+
+```
+Percentage Volume Oscillator (PVO):
+
+((12-day EMA of Volume - 26-day EMA of Volume) / 26-day EMA of Volume) x 100
+Signal Line: 9-day EMA of PVO
+PVO Histogram: PVO - Signal Line
+```
+
+## Price Relative/Relative Strength
+
+Technical Indicator that compares the performance of two stocks to each other by dividing their price data.
+
+```
+Price Relative = Base Security / Comparitive Security
+
+Ratio Symbol Close = Close of First Symbol / Close of Second Symbol
+Ratio Symbol Open  = Open of First Symbol / Open of Second Symbol
+Ratio Symbol High  = High of First Symbol / High of Second Symbol
+Ratio Symbol Low   = Low of First Symbol / Low of Second Symbol
+```
+
+## Pring's Know Sure Thing (KST)
+
+A momentum oscillator from Martin Pring based on the smoothed rate-of-change for four different timeframes.
+
+```
+RMCA1 = 10-period SMA of 10-period rate-of-change
+RMCA2 = 10-period SMA of 15-period rate-of-change
+RMCA3 = 10-period SMA of 20-period rate-of-change
+RMCA4 = 15-period SMA of 30-period rate-of-change
+
+KST = (RCMA1 x 1) + (RCMA2 x 2) + (RCMA3 x 3) + (RCMA4 x 4)
+
+Signal Line = 9-period SMA of KST
+```
+
+## Rate of Change (ROC) and Momentum
+
+Shows the speed at which the stock's price is changing.
+
+```
+ROC = [(Close - Close n periods ago) / (Close n periods ago)] * 100
+```
+
+## Relative Strength Index (RSI)
+
+Shows how strongly a stock is moving in its current direction.
+
+```
+RSI = 100 - (100 / (1 + RS))
+RS = Average Gain / Average Loss
+
+where 
+First Average Gain = Sum of Gains over the past 14 periods / 14
+First Average Loss = Sum of Losses over the past 14 periods / 14
+
+Subsequently:
+
+Average Gain = [(previous Average Gain) x 13 + current Gain] / 14
+Average Loss = [(previous Average Loss) x 13 + current Loss] / 14
+```
+
+## RRG Relative Strength
+
+Uses RS-Ratio to measure relative performance and RS-Momentum to measure the momentum of relative performance.
+
+## StockCharts Technical Rank (SCTR)
+
+```
+Long-Term Indicators (weighting)
+--------------------------------
+
+  * Percent above/below 200-day EMA (30%)
+  * 125-Day Rate-of-Change (30%)
+
+Medium-Term Indicators (weighting)
+----------------------------------
+
+  * Percent above/below 50-day EMA (15%)
+  * 20-day Rate-of-Change (15%)
+
+Short-Term Indicators (weighting)
+---------------------------------
+
+  * 3-day slope of PPO-Histogram (5%)
+  * 14-day RSI (5%)
+```
+
+## Slope 
+
+Measures the rise-over-run for a linear regression.
+
+## Standard Deviation (Volatility)
+
+A statistical measure of a stock's volatility.
+
+
+```
+1. Calculate the average (mean) price for the number of periods or observations.
+2. Determine each period's deviation (close less average price).
+3. Square each period's deviation.
+4. Sum the squared deviations.
+5. Divide this sum by the number of observations.
+6. The standard deviation is then equal to the square root of that number.
+```
+
+## Stochastic Oscillator (Fast, Slow, Pull)
+
+Shows how a stock's price is doing relative to past movements. Fast, Slow and Full stochastics are explained.
+
+```
+%K = (Current Close - Lowest Low)/(Highest High - Lowest Low) * 100
+%D = 3-day SMA of %K
+
+Lowest Low = lowest low for the look-back period
+Highest High = highest high for the look-back period
+%K is multiplied by 100 to move the decimal point two places
+```
+
+## StochRSI
+
+Combines Stochastic with the RSI indicator to help you see RSI changes more clearly.
+
+```
+StochRSI = (RSI - Lowest Low RSI) / (Highest High RSI - Lowest Low RSI)
+```
+
+## TRIX
+
+A triple-smoothed moving average of price movements.
+
+## True Strength Index
+
+An indicator that measures trend direction and identifies overbought/oversold levels.
+
+```
+Double Smoothed PC
+------------------
+PC = Current Price minus Prior Price
+First Smoothing = 25-period EMA of PC
+Second Smoothing = 13-period EMA of 25-period EMA of PC
+
+Double Smoothed Absolute PC
+---------------------------
+Absolute Price Change |PC| = Absolute Value of Current Price minus Prior Price
+First Smoothing = 25-period EMA of |PC|
+Second Smoothing = 13-period EMA of 25-period EMA of |PC|
+
+TSI = 100 x (Double Smoothed PC / Double Smoothed Absolute PC)
+```
+
+## Ulcer Index
+
+```
+Percent-Drawdown = ((Close - 14-period Max Close)/14-period Max Close) x 100
+
+Squared Average = (14-period Sum of Percent-Drawdown Squared)/14 
+
+Ulcer Index = Square Root of Squared Average
+```
+
+## Ultimate Oscillator
+
+Combines long-term, mid-term and short-term moving averages into one number.
+
+```
+P = Close - Minimum(Low or Prior Close).
+ 
+TR = Maximum(High or Prior Close)  -  Minimum(Low or Prior Close)
+
+Average7 = (7-period BP Sum) / (7-period TR Sum)
+Average14 = (14-period BP Sum) / (14-period TR Sum)
+Average28 = (28-period BP Sum) / (28-period TR Sum)
+
+UO = 100 x [(4 x Average7)+(2 x Average14)+Average28]/(4+2+1)
+```
+
+
+## Vortex Indicator
+
+An indicator designed to identify the start of a new trend and define the current trend.
+
+```
+Positive and negative trend movement:
+
++VM = Current High less Prior Low (absolute value)
+-VM = Current Low less Prior High (absolute value)
+
++VM14 = 14-period Sum of +VM
+-VM14 = 14-period Sum of -VM
+
+
+True Range (TR) is the greatest of:
+
+  * Current High less current Low
+  * Current High less previous Close (absolute value)
+  * Current Low less previous Close (absolute value)
+
+TR14 = 14-period Sum of TR
+
+
+Normalize the positive and negative trend movements:
+
++VI14 = +VM14/TR14
+-VI14 = -VM14/TR14
+```
+
+## Williams %R
+
+Uses Stochastic to determine overbought and oversold levels.
+
+```
+%R = (Highest High - Close)/(Highest High - Lowest Low) * -100
+
+Lowest Low = lowest low for the look-back period
+Highest High = highest high for the look-back period
+%R is multiplied by -100 correct the inversion and move the decimal.
 ```
 
 
@@ -329,3 +669,38 @@ def sma20(curr_idx, arr):
 # [Reference](#reference)
 
 - http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators
+
+
+```python
+def Gen(n):
+  i = 0
+  while i < n:
+    yield i
+    i += 1
+
+list((i for i in Gen(10)))
+
+
+def memory_generator(data):
+  prev = 0
+  for i in data:
+    yield i
+    prev = prev + i
+    print(prev)
+```
+
+
+## Generator Sample
+
+```python
+def multiples(of):
+    """Yields all multiples of given integer."""
+    x = of
+    while True:
+        yield x
+        x += of
+
+>>> from itertools import islice
+>>> list(islice(multiples(of=5), 10))
+[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+```

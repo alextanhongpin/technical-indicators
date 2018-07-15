@@ -84,3 +84,14 @@ Create a simple architecture for reusable d3 components, and apply it to a real-
 - Kagi
 - Point & Figure
 - Indicators
+
+
+## TODO
+
+- create reusable charts for different securities
+- create modules for all technical indicators
+- create modules for all technical overlays
+- mobile/web/desktop app?
+- write algorithms to identify chart patterns
+- machine learning to identify chart patterns
+- does ML helps to predict the stocks better with the technical indicators included, or is the raw data sufficient? (since the technical indicator values are derived from the raw data)
