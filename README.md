@@ -8,6 +8,12 @@ A simple stock chart with multiple indicators/signals applied.
 Create a simple architecture for reusable d3 components, and apply it to a real-life example (stock charts).
 
 
+## Thoughts
+
+Is it possible to create an algorithm that does not just aim to profit, but are able to take into account how each win will affect the future outcome, and aim to minimize it? One that takes into account game theory, and are able to tolerate losses to a certain degree to keep the game alive?
+
+
+
 ## Components
 
 - Base Chart (Done)
